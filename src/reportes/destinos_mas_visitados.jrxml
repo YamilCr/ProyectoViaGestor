@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="destinos_mas_visitados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="149e00e0-7f0a-4e1a-b5c4-5cbc3103f852">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2"/>
+	<queryString>
+		<![CDATA[SELECT * FROM recorrido
+inner join pasaje on pasaje.id_recorrido =
+recorrido.id_recorrido
+inner join asignacion on recorrido.id_asignacion =
+asignacion.id_asignacion
+where recorrido.estado_recorrido = 'true'
+order by recorrido.cant_pasajes_vendidos DESC]]>
+	</queryString>
+	<field name="id_recorrido" class="java.lang.Integer"/>
+	<field name="id_asignacion" class="java.lang.Integer"/>
+	<field name="ciudad_destino" class="java.lang.String"/>
+	<field name="provincia_destino" class="java.lang.String"/>
+	<field name="ciudad_origen" class="java.lang.String"/>
+	<field name="provincia_origen" class="java.lang.String"/>
+	<field name="precio_final" class="java.lang.Double"/>
+	<field name="estado_recorrido" class="java.lang.Boolean"/>
+	<field name="km" class="java.lang.Double"/>
+	<field name="cant_pasajes_vendidos" class="java.lang.Integer"/>
+	<field name="id_pasaje" class="java.lang.Integer"/>
+	<field name="nro_documento" class="java.lang.Long"/>
+	<field name="tipo_documento" class="java.lang.String"/>
+	<field name="nombre_pasajero" class="java.lang.String"/>
+	<field name="apellido_pasajero" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.Long"/>
+	<field name="nro_butaca" class="java.lang.Integer"/>
+	<field name="descuento" class="java.lang.Double"/>
+	<field name="estado_pasaje" class="java.lang.Boolean"/>
+	<field name="fecha_partida" class="java.sql.Date"/>
+	<field name="hora_salida" class="java.lang.String"/>
+	<field name="nro_colectivo" class="java.lang.Integer"/>
+	<field name="nro_butacas" class="java.lang.Integer"/>
+	<field name="disponibilidad_pasajes" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="17" width="555" height="47" forecolor="#99CC66" uuid="2d7f0075-1e95-4249-94a3-ea2a07a13e3a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="22" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DESTINOS CON MÁS PASAJES VENDIDOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="197" height="20" uuid="8c0e2c97-099b-4447-9402-a39f1d4554d8"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORIGEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="15" width="212" height="20" uuid="9115afbb-6a3f-4eec-84f5-0fabf1d64a68"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESTINO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="15" width="142" height="20" uuid="db1478c0-cf12-48ad-8d29-a501cd648a20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PASAJES VENIDOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="413" y="19" width="64" height="20" uuid="028cda95-f8e8-4ad3-8228-553d4fc030e6"/>
+				<textFieldExpression><![CDATA[$F{cant_pasajes_vendidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="477" y="19" width="10" height="20" uuid="2fc3d178-3dff-4b24-ab7f-0f9f97244222"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="487" y="19" width="68" height="20" uuid="826b6d90-9b4a-43f7-a482-b86bc7af865a"/>
+				<textFieldExpression><![CDATA[$F{disponibilidad_pasajes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="19" width="74" height="20" uuid="2231c093-ef7a-4acd-a796-7200d39e95e1"/>
+				<textFieldExpression><![CDATA[$F{ciudad_destino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="19" width="82" height="20" uuid="988a4334-b3a8-4c6a-9c9b-bd8d269a3004"/>
+				<textFieldExpression><![CDATA[$F{provincia_destino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="19" width="89" height="20" uuid="d6660f96-5869-4355-bea9-94ec38977895"/>
+				<textFieldExpression><![CDATA[$F{provincia_origen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="19" width="97" height="20" uuid="5e1bcdf2-c93a-4dda-b873-bc6157c8908c"/>
+				<textFieldExpression><![CDATA[$F{ciudad_origen}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="77" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="60" width="555" height="19" forecolor="#000000" uuid="341a7a79-1ce8-4a92-8b9c-bf42eac29b44"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[VIAGESTOR]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

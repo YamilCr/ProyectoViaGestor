@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="finanzas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1b67c8b-127d-4f9b-9d7a-f129c6e64a0b">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="296"/>
+	<queryString>
+		<![CDATA[SELECT recorrido.ciudad_origen,  recorrido.ciudad_destino,  recorrido.provincia_origen,  recorrido.provincia_destino, pasaje.precio_final,SUM(pasaje.precio_final) as precio FROM pasaje
+inner join recorrido on recorrido.id_recorrido =
+pasaje.id_recorrido
+where pasaje.estado_pasaje = 'true'
+group by pasaje.precio_final, recorrido.ciudad_origen,  recorrido.ciudad_destino,  recorrido.provincia_origen,  recorrido.provincia_destino]]>
+	</queryString>
+	<field name="ciudad_origen" class="java.lang.String"/>
+	<field name="ciudad_destino" class="java.lang.String"/>
+	<field name="provincia_origen" class="java.lang.String"/>
+	<field name="provincia_destino" class="java.lang.String"/>
+	<field name="precio_final" class="java.lang.Double"/>
+	<field name="precio" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="27" width="802" height="52" isPrintWhenDetailOverflows="true" forecolor="#99CC66" uuid="30d539ec-f6bb-4e68-8b0d-6388b2542ef8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="36" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FINANZA DE PASAJES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="52" y="0" width="227" height="20" uuid="be9e838b-783f-4057-b96f-1234625bd133"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PASAJES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="514" y="10" width="100" height="20" uuid="59f9b47b-c16a-46f2-93ef-28d995501783"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECAUDOS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="113" splitType="Stretch">
+			<textField>
+				<reportElement x="52" y="0" width="100" height="20" uuid="5c18c9b7-f4b9-4c5a-a9e4-3ff495ebf45a"/>
+				<textFieldExpression><![CDATA[$F{ciudad_origen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="179" y="0" width="100" height="20" uuid="3db44f84-2658-4f87-a598-45e6250c6372"/>
+				<textFieldExpression><![CDATA[$F{ciudad_destino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="0" width="100" height="20" uuid="f8c9afc0-27e2-4d88-b671-2cb6c081adec"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="152" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="220" splitType="Stretch">
+			<staticText>
+				<reportElement x="326" y="200" width="100" height="20" uuid="90701f96-b067-4c21-8767-b77db24465ee"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VIAGESTOR]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="209" splitType="Stretch"/>
+	</summary>
+</jasperReport>

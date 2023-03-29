@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_pasajes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9b16038a-5a4d-45e6-8c05-aaf9ac193d6f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="38"/>
+	<property name="ireport.y" value="493"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#B8E673">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#DCE6CF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#D9D9C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFFFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#D9D9C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#FFFFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#D9D9C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#FFFFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#D9D9C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#FFFFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#D9D9C3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#FFFFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tablaTotalVendidos" uuid="d94bf3fb-2427-417e-a3c6-59b654fba16f">
+		<queryString language="SQL">
+			<![CDATA[SELECT recorrido.ciudad_origen,  recorrido.ciudad_destino,  recorrido.provincia_origen,
+recorrido.provincia_destino, pasaje.precio_final,
+
+(select case when SUM(pasaje.precio_final) is null
+ then 0
+ else SUM(pasaje.precio_final)  end
+ from pasaje
+ where (pasaje.estado_pasaje = 'true') and (pasaje.id_recorrido= recorrido.id_recorrido))as total_vendido,
+
+(select CASE WHEN COUNT(pasaje.id_recorrido) is null
+ THEN 0
+ ELSE COUNT(pasaje.id_recorrido) end
+ from pasaje
+ where (pasaje.estado_pasaje = 'true') and (pasaje.id_recorrido= recorrido.id_recorrido)) as contador_ventas
+
+ FROM pasaje
+inner join recorrido on recorrido.id_recorrido =
+pasaje.id_recorrido
+where recorrido.estado_recorrido='true'
+group by pasaje.precio_final, recorrido.ciudad_origen,
+recorrido.ciudad_destino,  recorrido.provincia_origen,  recorrido.provincia_destino, total_vendido, contador_ventas]]>
+		</queryString>
+		<field name="ciudad_origen" class="java.lang.String"/>
+		<field name="ciudad_destino" class="java.lang.String"/>
+		<field name="total_vendido" class="java.lang.Double"/>
+		<field name="contador_ventas" class="java.lang.Long"/>
+	</subDataset>
+	<subDataset name="tablaCancelados" uuid="529747bf-2a26-409b-a31b-8b4ac6f61af2">
+		<queryString language="SQL">
+			<![CDATA[SELECT recorrido.ciudad_origen,  recorrido.ciudad_destino,  recorrido.provincia_origen,
+recorrido.provincia_destino, pasaje.precio_final,
+
+(select case when SUM(pasaje.precio_final) is null
+ then 0
+ else SUM(pasaje.precio_final) end
+ from pasaje
+ where pasaje.estado_pasaje = 'false' and (pasaje.id_recorrido= recorrido.id_recorrido))as total_cancelado,
+
+(select case when COUNT(*) is null
+ then 0
+ else COUNT(*) end
+ from pasaje
+ where pasaje.estado_pasaje = 'false' and (pasaje.id_recorrido= recorrido.id_recorrido)) as contador_cancelados
+
+FROM pasaje
+inner join recorrido on recorrido.id_recorrido =
+pasaje.id_recorrido
+where recorrido.estado_recorrido='true'
+group by pasaje.precio_final, recorrido.ciudad_origen,
+recorrido.ciudad_destino,  recorrido.provincia_origen,  recorrido.provincia_destino, total_cancelado, contador_cancelados]]>
+		</queryString>
+		<field name="total_cancelado" class="java.lang.Double"/>
+		<field name="contador_cancelados" class="java.lang.Long"/>
+		<field name="ciudad_origen" class="java.lang.String"/>
+		<field name="ciudad_destino" class="java.lang.String"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT recorrido.ciudad_origen,  recorrido.ciudad_destino,  recorrido.provincia_origen,
+recorrido.provincia_destino, pasaje.precio_final,
+
+(select case when SUM(pasaje.precio_final) is null
+ then 0
+ else SUM(pasaje.precio_final)  end
+ from pasaje
+ where (pasaje.estado_pasaje = 'true') and (pasaje.id_recorrido= recorrido.id_recorrido))as total_vendido,
+
+(select CASE WHEN COUNT(pasaje.id_recorrido) is null
+ THEN 0
+ ELSE COUNT(pasaje.id_recorrido) end
+ from pasaje
+ where (pasaje.estado_pasaje = 'true') and (pasaje.id_recorrido= recorrido.id_recorrido)) as contador_ventas,
+
+(select case when SUM(pasaje.precio_final) is null
+ then 0
+ else SUM(pasaje.precio_final) end
+ from pasaje
+ where pasaje.estado_pasaje = 'false' and (pasaje.id_recorrido= recorrido.id_recorrido))as total_cancelado,
+
+(select case when COUNT(*) is null
+ then 0
+ else COUNT(*) end
+ from pasaje
+ where pasaje.estado_pasaje = 'false' and (pasaje.id_recorrido= recorrido.id_recorrido)) as contador_cancelados
+
+ FROM pasaje
+inner join recorrido on recorrido.id_recorrido =
+pasaje.id_recorrido
+
+group by pasaje.precio_final, recorrido.ciudad_origen,
+recorrido.ciudad_destino,  recorrido.provincia_origen,  recorrido.provincia_destino, total_vendido, contador_ventas, total_cancelado, contador_cancelados]]>
+	</queryString>
+	<field name="ciudad_origen" class="java.lang.String"/>
+	<field name="ciudad_destino" class="java.lang.String"/>
+	<field name="provincia_origen" class="java.lang.String"/>
+	<field name="provincia_destino" class="java.lang.String"/>
+	<field name="precio_final" class="java.lang.Double"/>
+	<field name="total_vendido" class="java.lang.Double"/>
+	<field name="contador_ventas" class="java.lang.Long"/>
+	<field name="total_cancelado" class="java.lang.Double"/>
+	<field name="contador_cancelados" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="52" isPrintWhenDetailOverflows="true" forecolor="#000000" backcolor="#FFFFFF" uuid="1e531596-7e03-495f-bfcb-d0eb2cc6e4c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME DE PASAJES]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="354" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="82" y="12" width="363" height="97" uuid="9fdd3d87-7c2e-4c4b-bf88-72fc8e0e174f"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tablaTotalVendidos" uuid="14567777-3f2f-4cad-822a-89a9b7223dfe">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="904ff39e-0aa8-4ea2-a055-26811ad8549a">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="ea65ec92-337a-4bbe-88dd-b0f1ca5a14b6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Origen]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="2a2a481b-0e9c-4d0a-9977-ed95cdb51277"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{ciudad_origen}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="dee405db-9591-431f-bd73-587dd347b63c">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="f58ab20a-ac2a-4455-acaa-6ca7fa44e9b0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Destino]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="108c9c55-7f7b-480b-93eb-261bd2daa281"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{ciudad_destino}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="71b39d86-1003-4642-aaf8-833ca89f272d">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="6daf382c-2994-4854-bd91-8d17bc9e9c94"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total vendido]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="700ff8b8-8352-4b41-86c2-0e1a3ecdb51f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{total_vendido}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="130ce633-b072-449f-8178-c940ecb95e57">
+						<jr:tableHeader style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="140" height="30" uuid="b9956c42-246b-44b9-ba01-dfb39af114f9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Cantidad de ventas]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="140" height="20" uuid="a4f87f59-e60e-4804-942f-3d85a7e7e333"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{contador_ventas}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table 5" style="table 5" x="82" y="214" width="363" height="140" uuid="da0654d5-566f-4752-9b56-d1254a07a26d"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tablaCancelados" uuid="4898f17c-4860-4a4a-842f-0469c62604da">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="ef30c6cf-d5b4-4e2f-a12d-fa204ae4dafd">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="327cd18c-ac0d-40ce-a51a-3b360dad9d9e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Origen]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 5_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="3507f154-d64b-4133-ac24-6430a57847eb"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{ciudad_origen}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="3ad38c96-013e-4ab8-b83d-71e6a8eb480a">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="208013cb-c341-4226-927a-352c9093fbde"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Destino]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 5_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="18cdead4-ffdd-4fe8-8087-904b9da354ae"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{ciudad_destino}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="57434faf-6147-449e-ab41-48796030f51e">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="da4fc11c-5751-4103-afff-a2bc30e255fc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total cancelado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 5_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="1628d4b6-11e8-49ad-bb16-c274df973254"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{total_cancelado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="131" uuid="5a907a20-519e-4ca0-8bb0-2c89dcf576c7">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:tableFooter style="table 5_TH" height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 5_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="131" height="30" uuid="45cb9e81-b509-468b-b1b6-82b44f8780f3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Cantidad de pasajes cancelados]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 5_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="table 5_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="131" height="20" uuid="9066d8a1-4bcf-4a4d-9ac8-0e5594ccdad5"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{contador_cancelados}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="8" width="555" height="20" uuid="f022e4ff-1adc-4f34-9549-dbcb3cf75829"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VIAGESTOR]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
